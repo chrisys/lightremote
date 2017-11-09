@@ -7,13 +7,16 @@
 #include "Fonts/FreeSans9pt7b.h"
 #include "ArduinoJson.h"
 #include "TimeLib.h"
+#include "XPT2046_Touchscreen.h"
 
 #define TFT_DC D4
 #define TFT_CS D2
-#define TFT_MOSI D8
-#define TFT_CLK D6
+//#define TFT_MOSI D8
+//#define TFT_CLK D6
 #define TFT_RST D1
-#define TFT_MISO D7
+//#define TFT_MISO D7
+#define TS_CS D0
+#define TS_IRQ D5
 #define ILI9341_LGBG 0xE73C
 #define ILI9341_LGBO 0xDEFB
 #define ILI9341_DGBG 0x73AE
@@ -21,7 +24,9 @@
 #define ILI9341_STJC 0x057C
 #define ILI9341_STJB 0x0804
 
-Adafruit_ILI9341 tft = Adafruit_ILI9341(TFT_CS, TFT_DC, TFT_MOSI, TFT_CLK, TFT_RST, TFT_MISO);
+//Adafruit_ILI9341 tft = Adafruit_ILI9341(TFT_CS, TFT_DC, TFT_MOSI, TFT_CLK, TFT_RST, TFT_MISO);
+Adafruit_ILI9341 tft = Adafruit_ILI9341(TFT_CS, TFT_DC, TFT_RST);
+XPT2046_Touchscreen ts(TS_CS);
 SocketIoClient socket;
 
 #include "config.h"
@@ -42,6 +47,7 @@ void setup() {
   delay(10);
 
   tft.begin();
+  ts.begin();
   connect_wifi();
   
   socket.begin(host, port);
@@ -64,11 +70,28 @@ void setup() {
   interrupts();
 }
 
+
+
 void loop() {
   socket.loop();
 
   if(WiFi.status() != WL_CONNECTED) {
     setup();
+  }
+
+  if(ts.touched()) {
+    TS_Point p = ts.getPoint();
+    if(p.z > 2000)
+    {
+      // we make sure z is over 2000 to have reasonable pressure and remove any spurious readings
+      touch_cycle(p);
+    } else {
+      reset_touch_cycles();
+    }
+    
+    delay(50);
+  } else {
+    reset_touch_cycles();
   }
 
   yield();

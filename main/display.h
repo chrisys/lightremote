@@ -86,6 +86,67 @@ const unsigned char stjlogo [] PROGMEM = {
 
 boolean display_drawing = false;
 
+int touch_cycles_drawn = 0;
+switch_channel touch_channel;
+
+void reset_touch_cycles() {
+  int16_t start_x = touch_channel.start_x;
+  int16_t start_y = touch_channel.start_y;
+  
+  tft.fillRect(start_x,(start_y+30),118,5,ILI9341_WHITE);
+  tft.fillRect(start_x,(start_y+72),118,5,ILI9341_WHITE);
+  touch_cycles_drawn = 0;
+}
+
+void touch_cycle(TS_Point p) {
+  int16_t start_x = touch_channel.start_x;
+  int16_t start_y = touch_channel.start_y;
+  
+  if(touch_cycles_drawn==0)
+  {
+    // this is the first touch so work out where we are
+    // each box is 120x107
+    Serial.print("x: ");
+    Serial.print(p.x);
+    Serial.print(" y: ");
+    Serial.println(p.y);
+    if(p.x<1320 && p.y>2000)
+    {
+      // 1
+      touch_channel = state_channels[0];
+    } else if(p.x<1320 && p.y<2000)
+    {
+      // 2
+      touch_channel = state_channels[1];
+    } else if(p.x<2512 && p.x>1320 && p.y>2000)
+    {
+      // 3
+      touch_channel = state_channels[2];
+    } else if(p.x>2512 && p.y>2000)
+    {
+      // 4
+      touch_channel = state_channels[3];
+    } else if(p.x>2512 && p.y<2000)
+    {
+      // 5
+      touch_channel = state_channels[4];
+    }
+
+  }
+  
+  tft.fillRect(start_x,(start_y+30),(touch_cycles_drawn*5),5,ILI9341_BLBG);
+  tft.fillRect(start_x,(start_y+72),(touch_cycles_drawn*5),5,ILI9341_BLBG);
+  touch_cycles_drawn++;
+
+  if(touch_cycles_drawn==24)
+  {
+    // trigger something!
+    reset_touch_cycles();
+  }
+}
+
+
+
 void drawui() {
   // this sets out the blank UI
   tft.drawFastVLine(120,0,320,ILI9341_LGBO);
