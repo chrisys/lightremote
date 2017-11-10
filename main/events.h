@@ -1,13 +1,13 @@
+void connect_event(const char * payload, size_t length) {
+}
+
 void user_connected(const char * payload, size_t length) {
-  //Serial.println(payload);
 }
 
 void user_disconnected(const char * payload, size_t length) {
-  //Serial.println(payload);
 }
 
 void notify_change(const char * payload, size_t length) {
-  //Serial.println(payload);
   StaticJsonBuffer<200> jsonBuffer;
   JsonObject& change = jsonBuffer.parseObject(payload);
 
@@ -27,7 +27,6 @@ void notify_change(const char * payload, size_t length) {
 }
 
 void notify_message(const char * payload, size_t length) {
-  //Serial.println(payload);
 }
 
 void update_times(const char * payload, size_t length) {

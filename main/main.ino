@@ -54,6 +54,7 @@ void setup() {
   connect_wifi();
   
   socket.begin(host, port);
+  socket.on("connect", connect_event);
   socket.on("user connected", user_connected);
   socket.on("user disconnected", user_disconnected);
   socket.on("notify change", notify_change);

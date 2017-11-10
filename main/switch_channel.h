@@ -23,7 +23,7 @@ switch_channel setup_channel(int channel_number) {
       new_channel.circuit_string = "Circuit 1";
     break;
     case 1:
-      new_channel.start_x = 120;
+      new_channel.start_x = 121;
       new_channel.start_y = 0;
       new_channel.circuit_string = "Circuit 2";
     break;
@@ -38,7 +38,7 @@ switch_channel setup_channel(int channel_number) {
       new_channel.circuit_string = "Cube";
     break;
     case 4:
-      new_channel.start_x = 120;
+      new_channel.start_x = 121;
       new_channel.start_y = 214;
       new_channel.circuit_string = "School";
     break;
