@@ -256,13 +256,13 @@ void draw_wifi_strength() {
   int bars;
   if (rssi > -55) { 
     bars = 5;
-  } else if (rssi < -55 & rssi > -65) {
+  } else if (rssi <= -55 & rssi > -65) {
     bars = 4;
-  } else if (rssi < -65 & rssi > -70) {
+  } else if (rssi <= -65 & rssi > -70) {
     bars = 3;
-  } else if (rssi < -70 & rssi > -78) {
+  } else if (rssi <= -70 & rssi > -78) {
     bars = 2;
-  } else if (rssi < -78 & rssi > -82) {
+  } else if (rssi <= -78 & rssi > -82) {
     bars = 1;
   } else {
     bars = 0;
