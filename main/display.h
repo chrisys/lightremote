@@ -310,4 +310,22 @@ void check_display_is_current() {
 
 void update_time() {
   // update the clock shown on the display
+  tft.setFont();
+  tft.setCursor(165,200);
+  tft.fillRect(165,200,60,7,ILI9341_WHITE);
+
+  if(hour()<10) {
+    tft.print("0");
+  }
+  tft.print(hour());
+  tft.print(":");
+  if(minute()<10) {
+    tft.print("0");
+  }
+  tft.print(minute());
+  tft.print(":");
+  if(second()<10) {
+    tft.print("0");
+  }
+  tft.print(second());
 }

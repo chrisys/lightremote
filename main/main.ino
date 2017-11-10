@@ -29,6 +29,8 @@ Adafruit_ILI9341 tft = Adafruit_ILI9341(TFT_CS, TFT_DC, TFT_RST);
 XPT2046_Touchscreen ts(TS_CS);
 SocketIoClient socket;
 
+time_t current_time;
+
 #include "config.h"
 #include "switch_channel.h"
 #include "display.h"
@@ -37,6 +39,7 @@ SocketIoClient socket;
 
 void timer0_ISR (void) {
   draw_wifi_strength();
+  update_time();
   check_display_is_current();
 
   timer0_write(ESP.getCycleCount() + 40000000L); // at 80MHz, 0.5s
@@ -56,6 +59,7 @@ void setup() {
   socket.on("notify change", notify_change);
   socket.on("notify message", notify_message);
   socket.on("update times", update_times);
+  socket.on("server time", server_time);
 
   drawui();
   

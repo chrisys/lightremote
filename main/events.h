@@ -50,3 +50,14 @@ void update_times(const char * payload, size_t length) {
     }
   }
 }
+
+void server_time(const char * payload, size_t length) {
+  StaticJsonBuffer<200> jsonBuffer;
+  JsonObject& change = jsonBuffer.parseObject(payload);
+
+  if(change.success()) {
+    current_time = change["ts"];
+    setTime(current_time);
+  }
+}
+
