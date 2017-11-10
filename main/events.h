@@ -1,13 +1,13 @@
 void user_connected(const char * payload, size_t length) {
-  Serial.println(payload);
+  //Serial.println(payload);
 }
 
 void user_disconnected(const char * payload, size_t length) {
-  Serial.println(payload);
+  //Serial.println(payload);
 }
 
 void notify_change(const char * payload, size_t length) {
-  Serial.println(payload);
+  //Serial.println(payload);
   StaticJsonBuffer<200> jsonBuffer;
   JsonObject& change = jsonBuffer.parseObject(payload);
 
@@ -17,10 +17,8 @@ void notify_change(const char * payload, size_t length) {
     circuit--;
 
     const char* change_status = change["status"];
-    if(change_status != "")
+    if(change_status != '\0')
     {
-      Serial.println(change_status);
-      // TODO fix bug here as null response in json is setting status to false instead of leaving as is
       state_channels[circuit].state = change["status"];
     }
     
@@ -29,7 +27,7 @@ void notify_change(const char * payload, size_t length) {
 }
 
 void notify_message(const char * payload, size_t length) {
-  Serial.println(payload);
+  //Serial.println(payload);
 }
 
 void update_times(const char * payload, size_t length) {
@@ -41,7 +39,7 @@ void update_times(const char * payload, size_t length) {
     int circuit = change["circuit"];
     circuit--;
 
-    if(t>0) {  
+    if(t>0) {
       state_channels[circuit].timestamp = t;
       state_channels[circuit].timestamp_state = change["status"];
       state_channels[circuit].show_text_time = true;

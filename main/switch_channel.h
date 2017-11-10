@@ -83,6 +83,10 @@ boolean compare_state(int channel_number) {
     return false;
   }
 
+  if(display_channels[channel_number].show_text_time != state_channels[channel_number].show_text_time) {
+    return false;
+  }
+
   return true;
 }
 
