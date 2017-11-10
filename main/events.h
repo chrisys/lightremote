@@ -58,3 +58,18 @@ void server_time(const char * payload, size_t length) {
   }
 }
 
+// EMITS
+void switch_change(switch_channel channel) {
+  StaticJsonBuffer<200> jsonBuffer;
+  JsonObject& change = jsonBuffer.createObject();
+  
+  channel.circuit++;
+  change["circuit"] = channel.circuit;
+  change["set"] = channel.desired_state;
+
+  char outputjson[100];
+  change.printTo(outputjson);
+  Serial.println(outputjson);
+  socket.emit("switch change", outputjson);
+}
+

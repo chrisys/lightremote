@@ -106,6 +106,8 @@ void touch_cycle(TS_Point p) {
   {
     // this is the first touch so work out where we are
     // each box is 120x107
+    Serial.print("z: ");
+    Serial.print(p.z);
     Serial.print("x: ");
     Serial.print(p.x);
     Serial.print(" y: ");
@@ -141,6 +143,16 @@ void touch_cycle(TS_Point p) {
   if(touch_cycles_drawn==24)
   {
     // trigger something!
+    if(state_channels[touch_channel.circuit].desired_state == false)
+    {
+      state_channels[touch_channel.circuit].desired_state = true;      
+    } else {
+      state_channels[touch_channel.circuit].desired_state = false;
+    }
+
+    switch_change(state_channels[touch_channel.circuit]);
+    
+    
     reset_touch_cycles();
   }
 }

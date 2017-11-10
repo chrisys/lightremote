@@ -33,8 +33,8 @@ time_t current_time;
 
 #include "config.h"
 #include "switch_channel.h"
-#include "display.h"
 #include "events.h"
+#include "display.h"
 #include "wifi.h"
 
 void timer0_ISR (void) {

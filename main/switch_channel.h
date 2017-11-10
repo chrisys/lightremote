@@ -1,4 +1,5 @@
 struct switch_channel {
+  int8_t circuit;
   String circuit_string;
   int16_t start_x;
   int16_t start_y; 
@@ -18,26 +19,31 @@ switch_channel setup_channel(int channel_number) {
   
   switch(channel_number) {
     case 0:
+      new_channel.circuit = 0;
       new_channel.start_x = 0;
       new_channel.start_y = 0;
       new_channel.circuit_string = "Circuit 1";
     break;
     case 1:
+      new_channel.circuit = 1;
       new_channel.start_x = 121;
       new_channel.start_y = 0;
       new_channel.circuit_string = "Circuit 2";
     break;
     case 2:
+      new_channel.circuit = 2;
       new_channel.start_x = 0;
       new_channel.start_y = 107;
       new_channel.circuit_string = "Circuit 3";
     break;
     case 3:
+      new_channel.circuit = 3;
       new_channel.start_x = 0;
       new_channel.start_y = 214;
       new_channel.circuit_string = "Cube";
     break;
     case 4:
+      new_channel.circuit = 4;
       new_channel.start_x = 121;
       new_channel.start_y = 214;
       new_channel.circuit_string = "School";
